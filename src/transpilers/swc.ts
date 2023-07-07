@@ -211,20 +211,23 @@ export function createSwcOptions(
             ignoreDynamic: nodeModuleEmitKind === 'nodecjs',
           }
         : undefined,
-      swcrc: false,
+      swcrc: true,
       jsc: {
         externalHelpers: importHelpers,
         parser: {
           syntax: 'typescript',
           tsx: isTsx,
-          decorators: experimentalDecorators,
+          // decorators: experimentalDecorators,
+          decorators: true,
           dynamicImport: true,
           importAssertions: true,
         } as swcWasm.TsParserConfig,
         target: swcTarget as swcWasm.JscTarget,
         transform: {
-          decoratorMetadata: emitDecoratorMetadata,
-          legacyDecorator: true,
+          // decoratorMetadata: emitDecoratorMetadata,
+          // legacyDecorator: true,
+          // @ts-expect-error swc types are wrong
+          decoratorVersion: "2022-03",
           react: {
             throwIfNamespace: false,
             development: jsxDevelopment,
@@ -234,7 +237,8 @@ export function createSwcOptions(
             runtime: jsxRuntime,
           },
         },
-        keepClassNames,
+        // keepClassNames,
+        keepClassNames: true,
         experimental: {
           keepImportAssertions: true,
         },
